@@ -1,0 +1,148 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Pixelis0P\MazePay\forms;
+
+use pocketmine\form\Form;
+use pocketmine\player\Player;
+use Pixelis0P\MazePay\MazePay;
+
+class DepositForm implements Form {
+    
+    private MazePay $plugin;
+    private Player $player;
+    
+    public function __construct(MazePay $plugin, Player $player) {
+        $this->plugin = $plugin;
+        $this->player = $player;
+    }
+    
+    public function jsonSerialize(): array {
+        $uuid = $this->player->getUniqueId()->toString();
+        $db = $this->plugin->getDatabaseManager();
+        $walletBalance = $db->getWalletBalance($uuid);
+        
+        $depositImage = $this->plugin->getConfig()->get("form-images")["deposit"] ?? "";
+        $backImage = $this->plugin->getConfig()->get("form-images")["back"] ?? "";
+        
+        $buttons = [];
+        
+        // Deposit button
+        $depositButton = ["text" => "§l§aDeposit"];
+        if (!empty($depositImage)) {
+            $depositButton["image"] = [
+                "type" => "url",
+                "data" => $depositImage
+            ];
+        }
+        $buttons[] = $depositButton;
+        
+        // Back button
+        $backButton = ["text" => "§l§7Back to Menu"];
+        if (!empty($backImage)) {
+            $backButton["image"] = [
+                "type" => "url",
+                "data" => $backImage
+            ];
+        }
+        $buttons[] = $backButton;
+        
+        return [
+            "type" => "custom_form",
+            "title" => "§l§aDeposit Menu",
+            "content" => [
+                [
+                    "type" => "label",
+                    "text" => "§eWallet Balance: §a" . $this->plugin->formatMoney($walletBalance) . "\n§7Enter the amount you want to deposit:"
+                ],
+                [
+                    "type" => "input",
+                    "text" => "Amount",
+                    "placeholder" => "Enter amount..."
+                ]
+            ],
+            "buttons" => $buttons
+        ];
+    }
+    
+    public function handleResponse(Player $player, $data): void {
+        if ($data === null) {
+            return;
+        }
+        
+        // Check if player clicked back button (data will be just the form data without button info in custom_form)
+        // We need to use a modal form instead for button functionality
+        $player->sendForm(new DepositModalForm($this->plugin, $player));
+    }
+}
+
+class DepositModalForm implements Form {
+    
+    private MazePay $plugin;
+    private Player $player;
+    
+    public function __construct(MazePay $plugin, Player $player) {
+        $this->plugin = $plugin;
+        $this->player = $player;
+    }
+    
+    public function jsonSerialize(): array {
+        $uuid = $this->player->getUniqueId()->toString();
+        $db = $this->plugin->getDatabaseManager();
+        $walletBalance = $db->getWalletBalance($uuid);
+        
+        return [
+            "type" => "custom_form",
+            "title" => "§l§aDeposit Menu",
+            "content" => [
+                [
+                    "type" => "label",
+                    "text" => "§eWallet Balance: §a" . $this->plugin->formatMoney($walletBalance) . "\n\n§7Enter the amount you want to deposit into your bank:"
+                ],
+                [
+                    "type" => "input",
+                    "text" => "§l§aAmount",
+                    "placeholder" => "Enter amount..."
+                ]
+            ]
+        ];
+    }
+    
+    public function handleResponse(Player $player, $data): void {
+        if ($data === null) {
+            // Player closed form, go back to bank menu
+            $player->sendForm(new BankForm($this->plugin, $player));
+            return;
+        }
+        
+        $amount = $data[1] ?? "";
+        
+        if (!is_numeric($amount) || (float)$amount <= 0) {
+            $player->sendMessage($this->plugin->getPrefix() . $this->plugin->getMessage("invalid-amount"));
+            $player->sendForm(new DepositModalForm($this->plugin, $player));
+            return;
+        }
+        
+        $amount = (float)$amount;
+        $uuid = $player->getUniqueId()->toString();
+        $db = $this->plugin->getDatabaseManager();
+        
+        $walletBalance = $db->getWalletBalance($uuid);
+        
+        if ($walletBalance < $amount) {
+            $player->sendMessage($this->plugin->getPrefix() . $this->plugin->getMessage("deposit-insufficient"));
+            $player->sendForm(new DepositModalForm($this->plugin, $player));
+            return;
+        }
+        
+        $db->deductWalletBalance($uuid, $amount);
+        $db->addBankBalance($uuid, $amount);
+        
+        $message = str_replace("{amount}", $this->plugin->formatMoney($amount), $this->plugin->getMessage("deposit-success"));
+        $player->sendMessage($this->plugin->getPrefix() . $message);
+        
+        // Return to bank menu
+        $player->sendForm(new BankForm($this->plugin, $player));
+    }
+}

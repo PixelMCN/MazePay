@@ -1,0 +1,93 @@
+# MazePay Configuration File
+# Authors: Pixelis0P & MazecraftMCN Team
+config-version: "1.0.0"
+
+# Plugin prefix shown in messages
+prefix: "§b[MazePay]§r "
+
+# Currency symbol
+currency-symbol: "$"
+
+# Default balances for new players
+default-wallet-balance: 1000
+default-bank-balance: 0
+
+# Interest settings
+# Interest rate in percentage (e.g., 5.0 = 5%)
+interest-rate: 5.0
+
+# Interest interval in seconds (e.g., 3600 = 1 hour)
+interest-interval: 3600
+
+# Death penalty settings
+# Percentage of wallet money lost on death (e.g., 10.0 = 10%)
+death-penalty-percent: 10.0
+
+form-images:
+  deposit: "https://i.imgur.com/your-deposit-icon.png"
+  withdraw: "https://i.imgur.com/your-withdraw-icon.png"
+  back: "https://i.imgur.com/your-back-icon.png"
+
+# Messages
+messages:
+  # General messages
+  no-permission: "§cYou don't have permission to use this command!"
+  player-not-found: "§cPlayer not found or never joined the server!"
+  player-only: "§cThis command can only be used by players!"
+  invalid-amount: "§cPlease enter a valid amount!"
+  invalid-account: "§cInvalid account type! Use 'wallet' or 'bank'."
+  
+  # Balance command
+  balance-wallet: "§aYour wallet balance: §e{amount}"
+  balance-bank: "§aYour bank balance: §e{amount}"
+  balance-other-wallet: "§a{player}'s wallet balance: §e{amount}"
+  balance-other-bank: "§a{player}'s bank balance: §e{amount}"
+  
+  # Pay command
+  pay-success-sender: "§aYou paid §e{amount} §ato §e{player} §afrom your {account}!"
+  pay-success-receiver: "§aYou received §e{amount} §afrom §e{player}!"
+  pay-insufficient: "§cYou don't have enough money in your {account}!"
+  pay-self: "§cYou cannot pay yourself!"
+  pay-negative: "§cAmount must be greater than zero!"
+  
+  # Deposit command
+  deposit-success: "§aYou deposited §e{amount} §ainto your bank account!"
+  deposit-insufficient: "§cYou don't have enough money in your wallet!"
+  
+  # Withdraw command
+  withdraw-success: "§aYou withdrew §e{amount} §afrom your bank account!"
+  withdraw-insufficient: "§cYou don't have enough money in your bank!"
+  
+  # Top balance command
+  topbal-header: "§e§l=== Top {count} Richest Players ==="
+  topbal-entry: "§a#{rank}. §e{player} §7- §a{amount}"
+  topbal-footer: "§e§l=========================="
+  
+  # Admin commands
+  moneyset-success: "§aSet §e{player}'s {account} §ato §e{amount}§a!"
+  moneyadd-success: "§aAdded §e{amount} §ato §e{player}'s {account}§a!"
+  moneydeduct-success: "§aDeducted §e{amount} §afrom §e{player}'s {account}§a!"
+  moneydeduct-all: "§aDeducted all money from §e{player}'s {account}§a!"
+  
+  # Death penalty
+  death-penalty: "§cYou lost §e{amount} §cfrom your wallet due to death!"
+  
+  # Interest
+  interest-earned: "§aYou earned §e{amount} §aas interest on your bank balance!"
+  
+  # Bank command
+  bank-info: "§e§lBank Information\n§aBank Balance: §e{bank}\n§aInterest Rate: §e{rate}%\n§aNext Interest: §e{time}"
+  
+  # Help command
+  help-header: "§e§l=== MazePay Commands ==="
+  help-pay: "§a/pay <player> <amount> <wallet/bank> §7- Pay a player"
+  help-balance: "§a/balance [wallet/bank] §7- Check your balance"
+  help-deposit: "§a/deposit <amount> §7- Deposit money to bank"
+  help-withdraw: "§a/withdraw <amount> §7- Withdraw money from bank"
+  help-topbal: "§a/topbal [10/20] §7- View richest players"
+  help-bank: "§a/bank §7- View bank information"
+  help-admin-header: "§c§lAdmin Commands:"
+  help-moneyset: "§c/moneyset <player> <amount> <wallet/bank> §7- Set player's money"
+  help-moneyadd: "§c/moneyadd <player> <amount> <wallet/bank> §7- Add money to player"
+  help-moneydeduct: "§c/moneydeduct <player> <amount/all> <wallet/bank> §7- Remove money from player"
+  help-footer: "§e§l=========================="

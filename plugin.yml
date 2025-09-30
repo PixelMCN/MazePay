@@ -1,0 +1,48 @@
+name: MazePay
+version: 1.0.0
+main: Pixelis0P\MazePay\MazePay
+api: 5.0.0
+author: Pixelis0P & MazecraftMCN Team
+description: A comprehensive economy plugin for PocketMine-MP
+website: https://github.com/Pixelis0P/MazePay
+
+permissions:
+  mazepay.command.help:
+    description: Allows usage of /mazepay help command
+    default: true
+  
+  mazepay.command.pay:
+    description: Allows usage of /pay command
+    default: true
+  
+  mazepay.command.balance:
+    description: Allows usage of /balance command
+    default: true
+  
+  mazepay.command.deposit:
+    description: Allows usage of /deposit command
+    default: true
+  
+  mazepay.command.withdraw:
+    description: Allows usage of /withdraw command
+    default: true
+  
+  mazepay.command.topbalance:
+    description: Allows usage of /topbalance command
+    default: true
+  
+  mazepay.command.bank:
+    description: Allows usage of /bank command
+    default: true
+  
+  mazepay.command.moneyset:
+    description: Allows usage of /moneyset command
+    default: op
+  
+  mazepay.command.moneyadd:
+    description: Allows usage of /moneyadd command
+    default: op
+  
+  mazepay.command.moneydeduct:
+    description: Allows usage of /moneydeduct command
+    default: op
