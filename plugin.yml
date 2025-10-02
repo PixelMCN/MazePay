@@ -1,10 +1,10 @@
 name: MazePay
-version: 1.0.0
+version: 1.2.0
 main: Pixelis0P\MazePay\MazePay
 api: 5.0.0
 author: Pixelis0P & MazecraftMCN Team
 description: A comprehensive economy plugin for PocketMine-MP
-website: https://github.com/Pixelis0P/MazePay
+website: https://github.com/PixelMCN/MazePay
 
 permissions:
   mazepay.command.help:

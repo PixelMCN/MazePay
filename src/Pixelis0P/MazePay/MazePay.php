@@ -32,7 +32,7 @@ class MazePay extends PluginBase implements Listener {
         self::$instance = $this;
         
         $this->saveDefaultConfig();
-        $this->checkConfigVersion();
+        // Removed config version control
         $this->config = $this->getConfig();
         
         @mkdir($this->getDataFolder());
@@ -45,14 +45,14 @@ class MazePay extends PluginBase implements Listener {
         $interestInterval = $this->config->get("interest-interval", 3600) * 20;
         $this->getScheduler()->scheduleRepeatingTask(new InterestTask($this), (int)$interestInterval);
         
-        $this->getLogger()->info("MazePay has been enabled!");
+        $this->getLogger()->info("§b§l[MazePay] §aplugin enabled!");
     }
     
     public function onDisable(): void {
         if(isset($this->databaseManager)) {
             $this->databaseManager->close();
         }
-        $this->getLogger()->info("MazePay has been disabled!");
+        $this->getLogger()->info("§b§l[MazePay] §aplugin disabled!");
     }
     
     private function registerCommands(): void {
@@ -70,18 +70,7 @@ class MazePay extends PluginBase implements Listener {
         $commandMap->register("mazepay", new MazePayHelpCommand($this));
     }
     
-    private function checkConfigVersion(): void {
-        $config = $this->getConfig();
-        $currentVersion = "1.0.0";
-        
-        if(!$config->exists("config-version") || $config->get("config-version") !== $currentVersion) {
-            $this->getLogger()->warning("Your config.yml is outdated. Creating a new one...");
-            rename($this->getDataFolder() . "config.yml", $this->getDataFolder() . "config.old.yml");
-            $this->saveDefaultConfig();
-            $this->reloadConfig();
-        }
-    }
-    
+
     public static function getInstance(): MazePay {
         return self::$instance;
     }
