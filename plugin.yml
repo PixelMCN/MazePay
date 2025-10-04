@@ -46,3 +46,7 @@ permissions:
   mazepay.command.moneydeduct:
     description: Allows usage of /moneydeduct command
     default: op
+
+  mazepay.command.backup:
+    description: Allows creating and restoring backups
+    default: op

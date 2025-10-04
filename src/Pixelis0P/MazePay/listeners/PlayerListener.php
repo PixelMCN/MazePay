@@ -24,8 +24,21 @@ class PlayerListener implements Listener {
         
         if (!$db->accountExists($uuid)) {
             $db->createAccount($player);
+            $this->plugin->getDatabaseManager()->audit("Account created for {$player->getName()} ({$uuid})");
         } else {
             $db->updateUsername($uuid, $player->getName());
+            $this->plugin->getDatabaseManager()->audit("Username updated for {$uuid} -> {$player->getName()}");
+        }
+
+        // Send pending notifications (offline pays, admin messages, etc.)
+        $pending = $db->getPendingNotifications($uuid);
+        $idsToClear = [];
+        foreach ($pending as $row) {
+            $player->sendMessage($this->plugin->getPrefix() . $row['message']);
+            $idsToClear[] = (int)$row['id'];
+        }
+        if (!empty($idsToClear)) {
+            $db->clearPendingNotificationsById($idsToClear);
         }
     }
     

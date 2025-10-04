@@ -49,8 +49,12 @@ class MoneyDeductCommand extends Command {
         if (strtolower($amountStr) === "all") {
             if ($account === "wallet") {
                 $db->setWalletBalance($targetUUID, 0);
+                $db->logTransaction(null, $targetUUID, 0, $account, 'moneydeduct_all', "Deduct all by {$sender->getName()}", true);
+                $this->plugin->getDatabaseManager()->audit("Admin {$sender->getName()} set {$targetName} ({$account}) to 0");
             } else {
                 $db->setBankBalance($targetUUID, 0);
+                $db->logTransaction(null, $targetUUID, 0, $account, 'moneydeduct_all', "Deduct all by {$sender->getName()}", true);
+                $this->plugin->getDatabaseManager()->audit("Admin {$sender->getName()} set {$targetName} ({$account}) to 0");
             }
             
             $message = str_replace(
@@ -72,6 +76,9 @@ class MoneyDeductCommand extends Command {
             } else {
                 $db->deductBankBalance($targetUUID, $amount);
             }
+
+            $db->logTransaction(null, $targetUUID, $amount, $account, 'moneydeduct', "Deducted by {$sender->getName()}", true);
+            $this->plugin->getDatabaseManager()->audit("Admin {$sender->getName()} deducted {$amount} from {$targetName} ({$account})");
             
             $message = str_replace(
                 ["{amount}", "{player}", "{account}"],

@@ -18,6 +18,7 @@ use Pixelis0P\MazePay\commands\MoneyAddCommand;
 use Pixelis0P\MazePay\commands\MoneyDeductCommand;
 use Pixelis0P\MazePay\commands\BankCommand;
 use Pixelis0P\MazePay\commands\MazePayHelpCommand;
+use Pixelis0P\MazePay\commands\BackupCommand;
 use Pixelis0P\MazePay\database\DatabaseManager;
 use Pixelis0P\MazePay\listeners\PlayerListener;
 use Pixelis0P\MazePay\tasks\InterestTask;
@@ -37,6 +38,7 @@ class MazePay extends PluginBase implements Listener {
         
         @mkdir($this->getDataFolder());
         
+        // Initialize database manager (supports sqlite or mysql based on config)
         $this->databaseManager = new DatabaseManager($this);
         
         $this->registerCommands();
@@ -57,7 +59,7 @@ class MazePay extends PluginBase implements Listener {
     
     private function registerCommands(): void {
         $commandMap = $this->getServer()->getCommandMap();
-        
+        // Register commands (constructors supply aliases)
         $commandMap->register("mazepay", new PayCommand($this));
         $commandMap->register("mazepay", new BalanceCommand($this));
         $commandMap->register("mazepay", new DepositCommand($this));
@@ -68,6 +70,7 @@ class MazePay extends PluginBase implements Listener {
         $commandMap->register("mazepay", new MoneyDeductCommand($this));
         $commandMap->register("mazepay", new BankCommand($this));
         $commandMap->register("mazepay", new MazePayHelpCommand($this));
+        $commandMap->register("mazepay", new BackupCommand($this));
     }
     
 

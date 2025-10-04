@@ -13,7 +13,7 @@ class MoneyAddCommand extends Command {
     private MazePay $plugin;
     
     public function __construct(MazePay $plugin) {
-        parent::__construct("moneyadd", "Add money to a player's account", "/moneyadd <player> <amount> <wallet/bank>");
+        parent::__construct("moneyadd", "Add money to a player's account", "/moneyadd <player> <amount> <wallet/bank>", ["moneyadd", "madd"]);
         $this->setPermission("mazepay.command.moneyadd");
         $this->plugin = $plugin;
     }
@@ -58,7 +58,18 @@ class MoneyAddCommand extends Command {
         } else {
             $db->addBankBalance($targetUUID, $amount);
         }
-        
+        // Log admin transaction
+        $db->logTransaction(null, $targetUUID, $amount, $account, 'moneyadd', "Added by {$sender->getName()}", true);
+        $this->plugin->getDatabaseManager()->audit("Admin {$sender->getName()} added {$amount} to {$targetName} ({$account})");
+
+        // If player offline, add pending notification
+        $targetPlayer = $this->plugin->getServer()->getPlayerByPrefix($targetName);
+        if ($targetPlayer === null) {
+            $message = str_replace([
+                "{amount}", "{player}", "{account}"
+            ], [$this->plugin->formatMoney($amount), $sender->getName(), $account], $this->plugin->getMessage("moneyadd-success"));
+            $db->addPendingNotification($targetUUID, $message);
+        }
         $message = str_replace(
             ["{amount}", "{player}", "{account}"],
             [$this->plugin->formatMoney($amount), $targetName, $account],

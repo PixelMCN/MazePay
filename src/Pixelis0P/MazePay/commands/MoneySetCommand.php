@@ -13,7 +13,7 @@ class MoneySetCommand extends Command {
     private MazePay $plugin;
     
     public function __construct(MazePay $plugin) {
-        parent::__construct("moneyset", "Set a player's money", "/moneyset <player> <amount> <wallet/bank>");
+        parent::__construct("moneyset", "Set a player's money", "/moneyset <player> <amount> <wallet/bank>", ["moneyset", "mset"]);
         $this->setPermission("mazepay.command.moneyset");
         $this->plugin = $plugin;
     }
@@ -58,7 +58,9 @@ class MoneySetCommand extends Command {
         } else {
             $db->setBankBalance($targetUUID, $amount);
         }
-        
+        $db->logTransaction(null, $targetUUID, $amount, $account, 'moneyset', "Set by {$sender->getName()}", true);
+        $this->plugin->getDatabaseManager()->audit("Admin {$sender->getName()} set {$targetName} ({$account}) to {$amount}");
+
         $message = str_replace(
             ["{player}", "{account}", "{amount}"],
             [$targetName, $account, $this->plugin->formatMoney($amount)],

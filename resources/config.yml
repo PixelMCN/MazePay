@@ -102,3 +102,37 @@ messages:
   help-moneyadd: "§c/moneyadd <player> <amount> <wallet/bank> §7- Add money to player"
   help-moneydeduct: "§c/moneydeduct <player> <amount/all> <wallet/bank> §7- Remove money from player"
   help-footer: "§e§l=========================="
+
+# Database settings: choose 'sqlite' (default) or 'mysql'.
+database:
+  type: sqlite # sqlite or mysql
+  mysql:
+    host: "127.0.0.1"
+    port: 3306
+    user: ""
+    pass: ""
+    database: "mazepay"
+
+# Transaction logging / audit
+transaction-log:
+  enabled: true
+  retention-days: 30
+
+# Offline-pay notifications: queued messages sent when a player next joins
+offline-pay-notify: true
+
+# Backup settings
+backup:
+  enabled: false         # enable plugin-triggered backups (sqlite copy). For MySQL, configure external dump tool
+  backups-folder: "backups"
+  auto: false            # enable periodic automatic backups
+  auto-interval-hours: 24
+
+# Audit log settings
+audit:
+  enabled: true
+  folder: "audit"
+
+# Tab completion
+tab-complete:
+  enabled: true

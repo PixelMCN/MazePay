@@ -14,7 +14,7 @@ class WithdrawCommand extends Command {
     private MazePay $plugin;
     
     public function __construct(MazePay $plugin) {
-        parent::__construct("withdraw", "Withdraw money from your bank", "/withdraw <amount>");
+        parent::__construct("withdraw", "Withdraw money from your bank", "/withdraw <amount>", ["with", "withdraw"]);
         $this->setPermission("mazepay.command.withdraw");
         $this->plugin = $plugin;
     }
@@ -55,8 +55,10 @@ class WithdrawCommand extends Command {
         
         $db->deductBankBalance($uuid, $amount);
         $db->addWalletBalance($uuid, $amount);
-        
-        $message = str_replace("{amount}", $this->plugin->formatMoney($amount), $this->plugin->getMessage("withdraw-success"));
+    $db->logTransaction($uuid, $uuid, $amount, 'wallet', 'withdraw', 'Player withdraw');
+    $this->plugin->getDatabaseManager()->audit("Player {$sender->getName()} ({$uuid}) withdrew {$amount}");
+
+    $message = str_replace("{amount}", $this->plugin->formatMoney($amount), $this->plugin->getMessage("withdraw-success"));
         $sender->sendMessage($this->plugin->getPrefix() . $message);
         
         return true;

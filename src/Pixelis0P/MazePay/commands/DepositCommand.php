@@ -14,7 +14,7 @@ class DepositCommand extends Command {
     private MazePay $plugin;
     
     public function __construct(MazePay $plugin) {
-        parent::__construct("deposit", "Deposit money into your bank", "/deposit <amount>");
+        parent::__construct("deposit", "Deposit money into your bank", "/deposit <amount>", ["dep", "deposit"]);
         $this->setPermission("mazepay.command.deposit");
         $this->plugin = $plugin;
     }
@@ -55,6 +55,8 @@ class DepositCommand extends Command {
         
         $db->deductWalletBalance($uuid, $amount);
         $db->addBankBalance($uuid, $amount);
+    $db->logTransaction($uuid, $uuid, $amount, 'bank', 'deposit', 'Player deposit');
+    $this->plugin->getDatabaseManager()->audit("Player {$sender->getName()} ({$uuid}) deposited {$amount}");
         
         $message = str_replace("{amount}", $this->plugin->formatMoney($amount), $this->plugin->getMessage("deposit-success"));
         $sender->sendMessage($this->plugin->getPrefix() . $message);

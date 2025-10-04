@@ -14,7 +14,7 @@ class PayCommand extends Command {
     private MazePay $plugin;
     
     public function __construct(MazePay $plugin) {
-        parent::__construct("pay", "Pay money to another player", "/pay <player> <amount> <wallet/bank>");
+        parent::__construct("pay", "Pay money to another player", "/pay <player> <amount> <wallet/bank>", ["pay", "send"]);
         $this->setPermission("mazepay.command.pay");
         $this->plugin = $plugin;
     }
@@ -84,6 +84,15 @@ class PayCommand extends Command {
         } else {
             $db->deductBankBalance($senderUUID, $amount);
             $db->addBankBalance($targetUUIDStr, $amount);
+        }
+
+        // Log transaction
+        $db->logTransaction($senderUUID, $targetUUIDStr, $amount, $account, 'pay', "Pay from {$sender->getName()} to {$targetName}");
+
+        // If target is offline, add pending notification
+        if ($target === null) {
+            $message = str_replace(["{amount}", "{player}", "{account}"], [$this->plugin->formatMoney($amount), $sender->getName(), $account], $this->plugin->getMessage("pay-success-receiver"));
+            $db->addPendingNotification($targetUUIDStr, $message);
         }
         
         $message = str_replace(["{amount}", "{player}", "{account}"], 

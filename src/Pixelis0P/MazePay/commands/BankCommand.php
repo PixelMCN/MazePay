@@ -16,7 +16,7 @@ class BankCommand extends Command {
     private MazePay $plugin;
     
     public function __construct(MazePay $plugin) {
-        parent::__construct("bank", "Open bank menu", "/bank");
+        parent::__construct("bank", "Open bank menu", "/bank", ["bank", "bankmenu"]);
         $this->setPermission("mazepay.command.bank");
         $this->plugin = $plugin;
     }
@@ -33,6 +33,7 @@ class BankCommand extends Command {
         }
         
         $sender->sendForm(new BankForm($this->plugin, $sender, "main"));
+    $this->plugin->getDatabaseManager()->audit("{$sender->getName()} opened bank menu");
         
         return true;
     }
