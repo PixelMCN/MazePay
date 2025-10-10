@@ -1,52 +1,39 @@
 name: MazePay
-version: 1.2.0
-main: Pixelis0P\MazePay\MazePay
-api: 5.0.0
-author: Pixelis0P & MazecraftMCN Team
-description: A comprehensive economy plugin for PocketMine-MP
-website: https://github.com/PixelMCN/MazePay
+version: 2.0.0
+api: [5.0.0]
+author: PixelMCN & MazecraftMCN Team
+main: PixelMCN\MazePay\MazePay
+description: A lightweight, fully customizable PocketMine economy plugin
+load: STARTUP
 
 permissions:
-  mazepay.command.help:
-    description: Allows usage of /mazepay help command
-    default: true
-  
-  mazepay.command.pay:
-    description: Allows usage of /pay command
-    default: true
-  
   mazepay.command.balance:
-    description: Allows usage of /balance command
+    description: Allows users to view their balance
     default: true
-  
-  mazepay.command.deposit:
-    description: Allows usage of /deposit command
+  mazepay.command.pay:
+    description: Allows users to pay others
     default: true
-  
-  mazepay.command.withdraw:
-    description: Allows usage of /withdraw command
-    default: true
-  
-  mazepay.command.topbalance:
-    description: Allows usage of /topbalance command
-    default: true
-  
   mazepay.command.bank:
-    description: Allows usage of /bank command
+    description: Allows users to open the bank menu
     default: true
-  
-  mazepay.command.moneyset:
-    description: Allows usage of /moneyset command
+  mazepay.command.deposit:
+    description: Allows users to deposit money
+    default: true
+  mazepay.command.withdraw:
+    description: Allows users to withdraw money
+    default: true
+  mazepay.command.rich:
+    description: Allows users to view top balances
+    default: true
+  mazepay.command.addbalance:
+    description: Allows operators to add money to a player
     default: op
-  
-  mazepay.command.moneyadd:
-    description: Allows usage of /moneyadd command
+  mazepay.command.removebalance:
+    description: Allows operators to remove money from a player
     default: op
-  
-  mazepay.command.moneydeduct:
-    description: Allows usage of /moneydeduct command
+  mazepay.command.setbalance:
+    description: Allows operators to set a player's balance
     default: op
-
-  mazepay.command.backup:
-    description: Allows creating and restoring backups
-    default: op
+  mazepay.command.help:
+    description: Shows help for all commands
+    default: true

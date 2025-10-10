@@ -1,0 +1,75 @@
+# MazePay Messages Configuration
+# Placeholders: {player}, {amount}, {balance}, {wallet}, {bank}, {currency}, {target}, {interest}
+
+# General Messages
+prefix: "§l§6[MazePay]§r "
+no-permission: "{prefix}§cYou don't have permission to use this command."
+player-not-found: "{prefix}§cPlayer '{player}' not found or has never joined."
+invalid-amount: "{prefix}§cInvalid amount. Please enter a valid number."
+amount-too-low: "{prefix}§cAmount must be at least {currency}{amount}."
+insufficient-funds: "{prefix}§cYou don't have enough money. You need {currency}{amount}."
+
+# Balance Command
+balance-self: "{prefix}§aYour Balance:\n§eWallet: §f{currency}{wallet}\n§eBank: §f{currency}{bank}\n§eTotal: §f{currency}{balance}"
+balance-other: "{prefix}§a{player}'s Balance:\n§eWallet: §f{currency}{wallet}\n§eBank: §f{currency}{bank}\n§eTotal: §f{currency}{balance}"
+
+# Pay Command
+pay-success-sender: "{prefix}§aYou sent {currency}{amount} to {target}."
+pay-success-receiver: "{prefix}§aYou received {currency}{amount} from {player}."
+pay-self-error: "{prefix}§cYou cannot pay yourself!"
+pay-usage: "{prefix}§cUsage: /pay <player> <amount>"
+
+# Deposit Command
+deposit-success: "{prefix}§aSuccessfully deposited {currency}{amount} to your bank."
+deposit-usage: "{prefix}§cUsage: /deposit <amount>"
+wallet-insufficient: "{prefix}§cYou don't have enough money in your wallet."
+
+# Withdraw Command
+withdraw-success: "{prefix}§aSuccessfully withdrew {currency}{amount} from your bank."
+withdraw-usage: "{prefix}§cUsage: /withdraw <amount>"
+bank-insufficient: "{prefix}§cYou don't have enough money in your bank."
+
+# Bank Form
+bank-form-title: "§l§6Bank Menu"
+bank-form-content: "§eWallet Balance: §f{currency}{wallet}\n§eBank Balance: §f{currency}{bank}\n§eInterest Rate: §f{interest}%\n\n§7Select an action below:"
+bank-form-deposit-button: "§aDeposit Money"
+bank-form-withdraw-button: "§cWithdraw Money"
+bank-form-deposit-title: "§l§aDeposit Money"
+bank-form-deposit-content: "§eYour Wallet: §f{currency}{wallet}\n\n§7Enter the amount to deposit:"
+bank-form-deposit-placeholder: "Amount..."
+bank-form-withdraw-title: "§l§cWithdraw Money"
+bank-form-withdraw-content: "§eYour Bank: §f{currency}{bank}\n\n§7Enter the amount to withdraw:"
+bank-form-withdraw-placeholder: "Amount..."
+
+# Rich Command
+rich-title: "{prefix}§l§6Top {count} Richest Players"
+rich-entry: "§e#{rank}. §f{player} §7- §a{currency}{balance}"
+rich-usage: "{prefix}§cUsage: /rich [10|20|30]"
+
+# Admin Commands
+admin-add-success: "{prefix}§aAdded {currency}{amount} to {target}'s {type}."
+admin-remove-success: "{prefix}§aRemoved {currency}{amount} from {target}'s {type}."
+admin-set-success: "{prefix}§aSet {target}'s {type} to {currency}{amount}."
+admin-invalid-type: "{prefix}§cInvalid type. Use 'bank' or 'wallet'."
+admin-add-usage: "{prefix}§cUsage: /addbalance <player> <amount> <bank|wallet>"
+admin-remove-usage: "{prefix}§cUsage: /removebalance <player> <amount> <bank|wallet>"
+admin-set-usage: "{prefix}§cUsage: /setbalance <player> <amount> <bank|wallet>"
+
+# Help Command
+help-title: "§l§6=== MazePay Commands ==="
+help-balance: "§e/balance [player] §7- View balance"
+help-pay: "§e/pay <player> <amount> §7- Pay another player"
+help-bank: "§e/bank §7- Open bank menu"
+help-deposit: "§e/deposit <amount> §7- Deposit to bank"
+help-withdraw: "§e/withdraw <amount> §7- Withdraw from bank"
+help-rich: "§e/rich [10|20|30] §7- View top richest players"
+help-admin-title: "§l§6=== Admin Commands ==="
+help-addbalance: "§e/addbalance <player> <amount> <type> §7- Add money"
+help-removebalance: "§e/removebalance <player> <amount> <type> §7- Remove money"
+help-setbalance: "§e/setbalance <player> <amount> <type> §7- Set balance"
+
+# System Messages
+database-connected: "{prefix}§aDatabase connected successfully ({type})."
+database-error: "{prefix}§cDatabase connection failed: {error}"
+data-loaded: "{prefix}§aLoaded {count} player accounts."
+data-saved: "{prefix}§aAll player data has been saved."

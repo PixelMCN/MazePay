@@ -1,138 +1,70 @@
 # MazePay Configuration File
-# Authors: Pixelis0P & MazecraftMCN Team
+# Author: PixelMCN & MazecraftMCN Team
 
-#      ___           ___           ___           ___           ___         ___                 
-#     /__/\         /  /\         /  /\         /  /\         /  /\       /  /\          ___   
-#    |  |::\       /  /::\       /  /::|       /  /:/_       /  /::\     /  /::\        /__/|  
-#    |  |:|:\     /  /:/\:\     /  /:/:|      /  /:/ /\     /  /:/\:\   /  /:/\:\      |  |:|  
-#  __|__|:|\:\   /  /:/~/::\   /  /:/|:|__   /  /:/ /:/_   /  /:/~/:/  /  /:/~/::\     |  |:|  
-# /__/::::| \:\ /__/:/ /:/\:\ /__/:/ |:| /\ /__/:/ /:/ /\ /__/:/ /:/  /__/:/ /:/\:\  __|__|:|  
-# \  \:\~~\__\/ \  \:\/:/__\/ \__\/  |:|/:/ \  \:\/:/ /:/ \  \:\/:/   \  \:\/:/__\/ /__/::::\  
-#  \  \:\        \  \::/          |  |:/:/   \  \::/ /:/   \  \::/     \  \::/         ~\~~\:\ 
-#   \  \:\        \  \:\          |  |::/     \  \:\/:/     \  \:\      \  \:\           \  \:\
-#    \  \:\        \  \:\         |  |:/       \  \::/       \  \:\      \  \:\           \__\/
-#     \__\/         \__\/         |__|/         \__\/         \__\/       \__\/                
-
-# Plugin prefix shown in messages
-prefix: "§b[MazePay]§r "
-
-# Currency symbol
-currency-symbol: "$"
-
-# Default balances for new players
-default-wallet-balance: 1000
-default-bank-balance: 0
-
-# Interest settings
-# Interest rate in percentage (e.g., 5.0 = 5%)
-interest-rate: 5.0
-
-# Interest interval in seconds (e.g., 3600 = 1 hour)
-interest-interval: 3600
-
-# Death penalty settings
-# Percentage of wallet money lost on death (e.g., 10.0 = 10%)
-death-penalty-percent: 10.0
-
-form-images:
-  deposit: "https://i.imgur.com/your-deposit-icon.png"
-  withdraw: "https://i.imgur.com/your-withdraw-icon.png"
-  back: "https://i.imgur.com/your-back-icon.png"
-
-# Messages
-messages:
-  # General messages
-  no-permission: "§cYou don't have permission to use this command!"
-  player-not-found: "§cPlayer not found or never joined the server!"
-  player-only: "§cThis command can only be used by players!"
-  invalid-amount: "§cPlease enter a valid amount!"
-  invalid-account: "§cInvalid account type! Use 'wallet' or 'bank'."
-  
-  # Balance command
-  balance-wallet: "§aYour wallet balance: §e{amount}"
-  balance-bank: "§aYour bank balance: §e{amount}"
-  balance-other-wallet: "§a{player}'s wallet balance: §e{amount}"
-  balance-other-bank: "§a{player}'s bank balance: §e{amount}"
-  
-  # Pay command
-  pay-success-sender: "§aYou paid §e{amount} §ato §e{player} §afrom your {account}!"
-  pay-success-receiver: "§aYou received §e{amount} §afrom §e{player}!"
-  pay-insufficient: "§cYou don't have enough money in your {account}!"
-  pay-self: "§cYou cannot pay yourself!"
-  pay-negative: "§cAmount must be greater than zero!"
-  
-  # Deposit command
-  deposit-success: "§aYou deposited §e{amount} §ainto your bank account!"
-  deposit-insufficient: "§cYou don't have enough money in your wallet!"
-  
-  # Withdraw command
-  withdraw-success: "§aYou withdrew §e{amount} §afrom your bank account!"
-  withdraw-insufficient: "§cYou don't have enough money in your bank!"
-  
-  # Top balance command
-  topbal-header: "§e§l=== Top {count} Richest Players ==="
-  topbal-entry: "§a#{rank}. §e{player} §7- §a{amount}"
-  topbal-footer: "§e§l=========================="
-  
-  # Admin commands
-  moneyset-success: "§aSet §e{player}'s {account} §ato §e{amount}§a!"
-  moneyadd-success: "§aAdded §e{amount} §ato §e{player}'s {account}§a!"
-  moneydeduct-success: "§aDeducted §e{amount} §afrom §e{player}'s {account}§a!"
-  moneydeduct-all: "§aDeducted all money from §e{player}'s {account}§a!"
-  
-  # Death penalty
-  death-penalty: "§cYou lost §e{amount} §cfrom your wallet due to death!"
-  
-  # Interest
-  interest-earned: "§aYou earned §e{amount} §aas interest on your bank balance!"
-  
-  # Bank command
-  bank-info: "§e§lBank Information\n§aBank Balance: §e{bank}\n§aInterest Rate: §e{rate}%\n§aNext Interest: §e{time}"
-  
-  # Help command
-  help-header: "§e§l=== MazePay Commands ==="
-  help-pay: "§a/pay <player> <amount> <wallet/bank> §7- Pay a player"
-  help-balance: "§a/balance [wallet/bank] §7- Check your balance"
-  help-deposit: "§a/deposit <amount> §7- Deposit money to bank"
-  help-withdraw: "§a/withdraw <amount> §7- Withdraw money from bank"
-  help-topbal: "§a/topbal [10/20] §7- View richest players"
-  help-bank: "§a/bank §7- View bank information"
-  help-admin-header: "§c§lAdmin Commands:"
-  help-moneyset: "§c/moneyset <player> <amount> <wallet/bank> §7- Set player's money"
-  help-moneyadd: "§c/moneyadd <player> <amount> <wallet/bank> §7- Add money to player"
-  help-moneydeduct: "§c/moneydeduct <player> <amount/all> <wallet/bank> §7- Remove money from player"
-  help-footer: "§e§l=========================="
-
-# Database settings: choose 'sqlite' (default) or 'mysql'.
+# Database Configuration
+# Types: sqlite, mysql, json
 database:
-  type: sqlite # sqlite or mysql
+  type: sqlite
+  
+  # MySQL Settings (used when type is mysql)
   mysql:
-    host: "127.0.0.1"
+    host: localhost
     port: 3306
-    user: ""
-    pass: ""
-    database: "mazepay"
+    username: root
+    password: ""
+    database: mazepay
 
-# Transaction logging / audit
-transaction-log:
-  enabled: true
-  retention-days: 30
+# Economy Settings
+economy:
+  # Currency symbol (e.g., $, €, ¥, etc.)
+  currency-symbol: "$"
+  
+  # Starting balance for new players
+  starting-balance:
+    wallet: 1000
+    bank: 0
+  
+  # Bank interest rate (percentage per login/interval)
+  # Set to 0 to disable interest
+  interest-rate: 0.5
+  
+  # Minimum amount for transactions
+  minimum-transaction: 1
+  
+  # Maximum wallet capacity (set to -1 for unlimited)
+  max-wallet: -1
+  
+  # Maximum bank capacity (set to -1 for unlimited)
+  max-bank: -1
 
-# Offline-pay notifications: queued messages sent when a player next joins
-offline-pay-notify: true
+# Performance Settings
+performance:
+  # Enable caching for faster balance lookups
+  enable-cache: true
+  
+  # Cache lifetime in seconds
+  cache-lifetime: 300
+  
+  # Save interval in ticks (20 ticks = 1 second)
+  save-interval: 6000
 
-# Backup settings
-backup:
-  enabled: false         # enable plugin-triggered backups (sqlite copy). For MySQL, configure external dump tool
-  backups-folder: "backups"
-  auto: false            # enable periodic automatic backups
-  auto-interval-hours: 24
+# Form Settings
+forms:
+  # Enable custom images in forms
+  enable-images: true
+  
+  # Image URLs (leave empty for no image)
+  images:
+    bank-menu: "textures/blocks/gold_block"
+    deposit: "textures/items/gold_ingot"
+    withdraw: "textures/items/emerald"
+    balance: "textures/items/diamond"
+    pay: "textures/items/emerald"
 
-# Audit log settings
-audit:
-  enabled: true
-  folder: "audit"
-
-# Tab completion
-tab-complete:
-  enabled: true
+# Logging
+logging:
+  # Log all transactions
+  log-transactions: true
+  
+  # Log admin actions
+  log-admin-actions: true
