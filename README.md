@@ -1,7 +1,7 @@
 # MazePay
 
 [![Author](https://img.shields.io/badge/Author-PixelMCN%20%26%20MazecraftMCN-blue.svg)](https://github.com/PixelMCN)
-[![Version](https://img.shields.io/badge/Version-2.0.0-green.svg)](https://github.com/PixelMCN/MazePay/releases)
+[![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://github.com/PixelMCN/MazePay/releases)
 [![PocketMine](https://img.shields.io/badge/PocketMine-5.0.0-orange.svg)](https://github.com/pmmp/PocketMine-MP)
 [![PHP](https://img.shields.io/badge/PHP-8.4%2B-purple.svg)](https://www.php.net/)
 
